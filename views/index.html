@@ -17,7 +17,19 @@
         </div>
     </div>
 </div>
+<hr>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			{% for s in smaks %}
+				<pre><h3>{{s.id}}</h3><br/>{{s.smak}}</pre>
+			{% endfor %}
+		</div>
+	</div>
+
+</div>
 {% endblock %}
+
 
 {% block js %}
 <script>
@@ -31,8 +43,7 @@
 	function smak(text){
 
 	  function reqListener () {
-	    var tmplist = this.responseText.split(',')
-	    console.log( tmplist )
+	    window.location.reload();
 	    
 	  }
 	  var oReq = new XMLHttpRequest();
@@ -51,7 +62,8 @@
 	          //getMyList()
 	       }
 	    }
-	  oReq.send('smak=' + {{id}})
+	    console.log(JSON.stringify(post))
+	  oReq.send('smak=' + JSON.stringify(post))
 
 
 	}

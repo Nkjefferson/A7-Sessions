@@ -35,7 +35,7 @@ app.get('/', function(req, res) {
     }
     res.render('index.html', {
         id: req.session.id,
-        smaks: posts
+        smaks: posts.reverse()
     });
 });
 
@@ -48,11 +48,14 @@ app.post('/smak', function(req, res) {
     })
     req.on('end', function(d) {
 
+        console.log('game')
         if(body !=''){
             var post = qs.parse(body)
-            console.log("here" + post.smak);
-            if(post.smak){
-              console.log("here" + post.smak);
+            //console.log("here" + JSON.stringify(post));
+            if(post.undefinedsmak){
+              console.log("here" + post.undefinedsmak);
+              posts.push(JSON.parse(post.undefinedsmak));
+              console.log(posts);
             }
         
 
@@ -60,8 +63,9 @@ app.post('/smak', function(req, res) {
         res.end();
 
     }) 
-    return res.end()
 });
+
+
 
 // Kick start our server
 app.listen(app.get('port'), function() {
