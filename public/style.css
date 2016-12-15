@@ -1,0 +1,9 @@
+textArea{
+	width:120rem;
+	height:10rem;
+	resize:none;
+}
+
+button {
+	float:right;
+}

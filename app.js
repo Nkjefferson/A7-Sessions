@@ -1,7 +1,12 @@
-var express = require('express');
-var nunjucks = require('nunjucks');
+var express = require('express')
+,nunjucks = require('nunjucks')
+,cookieSession = require('cookie-session')
+, qs = require('querystring')
+,moniker = require('moniker');
+
 
 var app = express();
+var posts = [];
 
 // Setup nunjucks templating engine
 nunjucks.configure('views', {
@@ -9,22 +14,53 @@ nunjucks.configure('views', {
     express: app
 });
 
+app.use(express.static('public'));
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1','key2'],
+
+  // Cookie Options
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}))
 app.set('port', process.env.PORT || 3000);
 
 // Home page
 app.get('/', function(req, res) {
+    if(!req.session.id){
+        var name = moniker.choose();
+        name = name.charAt(0).toUpperCase() + name.slice(1);
+        var dex = name.indexOf('-') + 2;
+        name = name.slice(0,dex-1) + name.charAt(dex-1).toUpperCase() + name.slice(dex);
+        req.session.id = name;
+    }
     res.render('index.html', {
-        page: 'home',
-        port: app.get('port')
+        id: req.session.id,
+        smaks: posts
     });
 });
 
 // Other example
-app.get('/example', function(req, res) {
-    res.render('example.html', {
-        page: 'example',
-        port: app.get('port')
-    });
+app.post('/smak', function(req, res) {
+    var body
+    req.on('data', function(d) {
+    body += d;
+    //console.log(d)
+    })
+    req.on('end', function(d) {
+
+        if(body !=''){
+            var post = qs.parse(body)
+            console.log("here" + post.smak);
+            if(post.smak){
+              console.log("here" + post.smak);
+            }
+        
+
+        }
+        res.end();
+
+    }) 
+    return res.end()
 });
 
 // Kick start our server
