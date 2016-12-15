@@ -37,6 +37,7 @@ app.get('/', function(req, res) {
         id: req.session.id,
         smaks: posts.reverse()
     });
+    posts.reverse();
 });
 
 // Other example
