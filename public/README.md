@@ -1,2 +1,3 @@
-README.md
-AYY
+A7-Sessions
+
+For my technical achievement for this assignment, I used a templating language called nunjucks, it is a jinja2 port for nodejs supported by mozzilla, this allowed me to run a for loop on all of my posted elements. I also implemented the users unique session ID as a random 2 two word phrase so it is nicer to use and easier to quickly differentiate between posters. Other than that it was very straight forward.
